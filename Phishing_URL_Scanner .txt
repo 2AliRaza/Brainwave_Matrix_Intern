@@ -1,0 +1,23 @@
+ import requests
+import urllib
+import json
+url=input("Enter a URL Address to Scan ")
+encoded_url = urllib.parse.quote(url, safe='')
+api_url = "https://ipqualityscore.com/api/json/url/DP1jrySobi97DMifLSkgfYGjUUguOKb0/"
+data = requests.get(api_url + encoded_url)
+responce=data.json()
+if responce['message']=="Success.":
+   if responce['suspicious']==True and responce['domain_rank']==0:
+      print(" Be aware this ULR is Suspicious ")
+   else:
+      print("Entered URL is Secure")
+      print("Ip Address: ", responce['ip_address'])
+      print("Domain Age : ", responce['domain_age']['human'])
+      categ =responce['category']
+      if categ =='N/A':
+         print ("Domain Category : General")
+      else:
+       print("Domain Category: ", categ)
+
+else:
+  print("Please Enter a Valid URL Address")
